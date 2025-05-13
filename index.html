@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -448,11 +447,181 @@ else:
 
     <div class="divider"></div>
 
-    <h2>6. Conclusion</h2>
+    <h2>7. Testing and Usage Examples</h2>
+    
+    <p>Below is a detailed testing session with the Local AI File System Controller, demonstrating real-world usage and capabilities.</p>
+
+    <h3>Testing Environment</h3>
+    <div class="key-point">
+        <p><strong>Command used to launch the system:</strong></p>
+        <pre><code>mcphost -m ollama:qwen3:1.7b --config "C:\Users\Rakes\OneDrive\Documents\Local AI Agent\.mcp2.json"</code></pre>
+        
+        <p><strong>Initialization Log:</strong></p>
+        <pre><code>2025/05/13 17:18:47 INFO Model loaded provider=ollama model=qwen3:1.7b
+2025/05/13 17:18:47 INFO Initializing server... name=code-runner
+2025/05/13 17:18:49 INFO Initializing server... name=filesystem
+2025/05/13 17:18:51 INFO Server connected name=code-runner
+2025/05/13 17:18:51 INFO Server connected name=filesystem
+2025/05/13 17:18:51 INFO Tools loaded server=code-runner count=1
+2025/05/13 17:18:51 INFO Tools loaded server=filesystem count=11</code></pre>
+    </div>
+
+    <h3>Test Case 1: Directory Access Check</h3>
+    <div class="example-interaction">
+        <h4>User Query:</h4>
+        <pre><code>what re the folders you have access to?</code></pre>
+        
+        <h4>System Action:</h4>
+        <p>Using tool: <code>filesystem__list_allowed_directories</code></p>
+        
+        <h4>Response:</h4>
+        <blockquote>
+            <p>The allowed directories are:</p>
+            <ul>
+                <li>C:\Users\Rakes\OneDrive\Documents\Test</li>
+            </ul>
+            <p>You can explore files and folders within this directory. Let me know if you need help navigating or listing contents!</p>
+        </blockquote>
+    </div>
+
+    <h3>Test Case 2: File Creation</h3>
+    <div class="example-interaction">
+        <h4>User Query:</h4>
+        <pre><code>now create a file named calendar.py where it should contains the code of adding events into the calender</code></pre>
+        
+        <h4>System Actions:</h4>
+        <p>Using tools:</p>
+        <ul>
+            <li><code>filesystem__create_directory</code></li>
+            <li><code>filesystem__write_file</code></li>
+        </ul>
+        
+        <h4>Response:</h4>
+        <blockquote>
+            <p>The file calendar.py has been successfully created in the calendar directory. Here's the content:</p>
+            <pre><code>class Calendar:
+    def __init__(self):
+        self.events = []
+
+    def add_event(self, event_name, event_description):
+        self.events.append((event_name, event_description))
+        print(f'Event added: {event_name} - {event_description}')
+
+# Example usage
+if __name__ == '__main__':
+    cal = Calendar()
+    cal.add_event('Meeting', 'Discuss project timeline')
+    cal.add_event('Call', 'With client')</code></pre>
+            <p>You can run this script to see the events added. Let me know if you'd like to extend it (e.g., add date handling or display events)!</p>
+        </blockquote>
+    </div>
+
+    <h3>Test Case 3: Code Execution with Error Handling</h3>
+    <div class="example-interaction">
+        <h4>User Query:</h4>
+        <pre><code>now run the file that you created</code></pre>
+        
+        <h4>System Action:</h4>
+        <p>Using tool: <code>code-runner__run-code</code></p>
+        
+        <h4>Response:</h4>
+        <blockquote>
+            <p>The error was due to a missing backslash before the f in the print statement. Here's the corrected code:</p>
+            <pre><code>class Calendar:
+    def __init__(self):
+        self.events = []
+
+    def add_event(self, event_name, event_description):
+        self.events.append((event_name, event_description))
+        print(f'Event added: {event_name} - {event_description}')
+
+# Example usage
+if __name__ == '__main__':
+    cal = Calendar()
+    cal.add_event('Meeting', 'Discuss project timeline')
+    cal.add_event('Call', 'With client')</code></pre>
+            <p>Fix applied: The line print(f'Event added: {event_name} - {event_description}) was corrected to print(f'Event added: {event_name} - {event_description}') to fix the syntax error.</p>
+            <p>You can now run this script to see the events added. Let me know if you'd like to extend it!</p>
+        </blockquote>
+    </div>
+
+    <h3>Test Case 4: Code Re-execution After Fix</h3>
+    <div class="example-interaction">
+        <h4>User Query:</h4>
+        <pre><code>solve the errors in the code and run the code again, the code should run without any errors</code></pre>
+        
+        <h4>System Action:</h4>
+        <p>Using tool: <code>code-runner__run-code</code></p>
+        
+        <h4>Response:</h4>
+        <blockquote>
+            <p>The code has been successfully executed and the events are added to the calendar:</p>
+            <p>Output:</p>
+            <pre><code>Event added: Meeting - Discuss project timeline
+Event added: Call - With client</code></pre>
+            <p>✅ The code runs without errors and functions as intended. Let me know if you'd like to add features like date handling or event display!</p>
+        </blockquote>
+    </div>
+
+    <h3>Test Case 5: Adding Test Cases to Code</h3>
+    <div class="example-interaction">
+        <h4>User Query:</h4>
+        <pre><code>now add some test cases to the code and run the code</code></pre>
+        
+        <h4>System Action:</h4>
+        <p>Using tool: <code>code-runner__run-code</code></p>
+        
+        <h4>Response:</h4>
+        <blockquote>
+            <p>The code has been successfully executed with the following test cases:</p>
+            <p>✅ Test Results:</p>
+            <ol>
+                <li><code>test_add_event()</code>
+                    <ul>
+                        <li>Asserted len(cal.events) == 1 ✅</li>
+                        <li>Output: Event added: Meeting - Discuss project timeline</li>
+                    </ul>
+                </li>
+                <li><code>test_add_event_duplicate()</code>
+                    <ul>
+                        <li>Asserted len(cal.events) == 2 ✅</li>
+                        <li>Output: Event added: Meeting - Discuss project timeline</li>
+                        <li>Event added: Meeting - Another description</li>
+                    </ul>
+                </li>
+                <li><code>test_example_usage()</code>
+                    <ul>
+                        <li>Asserted len(cal.events) == 2 ✅</li>
+                        <li>Output: Event added: Meeting - Discuss project timeline</li>
+                        <li>Event added: Call - With client</li>
+                    </ul>
+                </li>
+            </ol>
+            <p>Summary: The code runs without errors and all test cases pass. The events are added correctly, and the assertions are satisfied. The output confirms the functionality as expected.</p>
+        </blockquote>
+    </div>
+
+    <h3>Test Session Conclusion</h3>
+    <div class="key-point">
+        <p>The testing session demonstrates the capabilities of the Local AI File System Controller:</p>
+        <ul>
+            <li><strong>Directory exploration</strong>: The system can identify accessible directories</li>
+            <li><strong>File creation</strong>: The system can create new files with specified content</li>
+            <li><strong>Code execution</strong>: The system can run Python code and capture output</li>
+            <li><strong>Error handling</strong>: The system detects and fixes syntax errors in code</li>
+            <li><strong>Test execution</strong>: The system can add and run test cases to verify code functionality</li>
+        </ul>
+        <p>These test cases confirm that the Local AI File System Controller effectively combines natural language processing with file system operations and code execution.</p>
+    </div>
+
+    <h2>8. Conclusion</h2>
 
     <p>This project demonstrates a powerful way to interact with local system resources using natural language through a modular MCP (Model Context Protocol) server architecture. By combining a local LLM with MCP-compatible tools like the filesystem and code-runner servers, users can seamlessly perform tasks such as file management and code execution via simple natural language commands.</p>
 
     <p>With a clear configuration setup and a scalable design, this system lays the groundwork for building intelligent, extensible local AI agents that can automate complex workflows and integrate additional tools with ease.</p>
+
+    <p>As shown in the testing section, the Local AI File System Controller effectively handles a variety of tasks from file creation to code execution and debugging with simple natural language commands, making local system interaction more accessible and intuitive.</p><!DOCTYPE html>
+
 
 </body>
 </html>
