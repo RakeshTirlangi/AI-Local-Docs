@@ -112,7 +112,7 @@
 </head>
 <body>
     <h1>Local AI File System Controller</h1>
-    <p>A Local AI File System Controller that allows users to control their file system using natural language commands via a command line interface (CLI). It works completely offline using a large language model (LLM) and a modular tool execution server.</p>
+    <p>The Local AI File System Controller that allows users to control their file system using natural language commands via a command line interface (CLI). It works completely offline using a large language model (LLM) and a modular tool execution server.</p>
 
     <div class="divider"></div>
 
@@ -149,10 +149,10 @@
     </ol>
 
     <div class="flowchart">
-        <div style="display: flex; flex-direction: row; justify-content: center; align-items: center; flex-wrap: wrap; margin: 20px 0;">
+        <div style="display: flex; flex-direction: column; align-items: center; margin: 20px 0;">
             <!-- User box -->
             <div style="display: flex; flex-direction: column; align-items: center; margin: 10px;">
-                <div style="width: 120px; height: 60px; background-color: #3498db; color: white; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-weight: bold;">
+                <div style="width: 180px; height: 60px; background-color: #3498db; color: white; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-weight: bold;">
                     User (CLI)
                 </div>
                 <!-- Arrow down -->
@@ -161,8 +161,8 @@
 
             <!-- MCP Host box -->
             <div style="display: flex; flex-direction: column; align-items: center; margin: 10px;">
-                <div style="width: 140px; height: 60px; background-color: #2ecc71; color: white; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-weight: bold; text-align: center;">
-                    MCP Host<br>(CLI)
+                <div style="width: 180px; height: 60px; background-color: #2ecc71; color: white; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-weight: bold; text-align: center;">
+                    MCP Host (CLI)
                 </div>
                 <!-- Arrow down -->
                 <div style="width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 15px solid #2ecc71; margin: 5px 0;"></div>
@@ -170,8 +170,8 @@
 
             <!-- Local LLM box -->
             <div style="display: flex; flex-direction: column; align-items: center; margin: 10px;">
-                <div style="width: 160px; height: 60px; background-color: #e74c3c; color: white; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-weight: bold; text-align: center;">
-                    Local LLM<br>(Ollama)
+                <div style="width: 180px; height: 60px; background-color: #e74c3c; color: white; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-weight: bold; text-align: center;">
+                    Local LLM (Ollama)
                 </div>
                 <!-- Arrow down -->
                 <div style="width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 15px solid #e74c3c; margin: 5px 0;"></div>
@@ -179,8 +179,8 @@
 
             <!-- MCP Server box -->
             <div style="display: flex; flex-direction: column; align-items: center; margin: 10px;">
-                <div style="width: 160px; height: 60px; background-color: #f39c12; color: white; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-weight: bold; text-align: center;">
-                    MCP Server<br>(Tool APIs)
+                <div style="width: 180px; height: 60px; background-color: #f39c12; color: white; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-weight: bold; text-align: center;">
+                    MCP Server (Tool APIs)
                 </div>
                 <!-- Arrow down -->
                 <div style="width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 15px solid #f39c12; margin: 5px 0;"></div>
@@ -188,8 +188,8 @@
 
             <!-- File System box -->
             <div style="display: flex; flex-direction: column; align-items: center; margin: 10px;">
-                <div style="width: 140px; height: 60px; background-color: #9b59b6; color: white; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-weight: bold; text-align: center;">
-                    Local File<br>System
+                <div style="width: 180px; height: 60px; background-color: #9b59b6; color: white; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-weight: bold; text-align: center;">
+                    Local File System
                 </div>
             </div>
         </div>
@@ -350,10 +350,10 @@
 
     <p>To start the server with a specific model and connect to the filesystem tools:</p>
 
-    <pre><code>mcphost -m ollama:qwen3:1.7b</code></pre>
+    <pre><code>mcphost -m ollama:qwen3:4b</code></pre>
 
     <p><strong>Expected Output:</strong></p>
-    <pre><code>INFO Model loaded provider=ollama model=qwen3:1.7b 
+    <pre><code>INFO Model loaded provider=ollama model=qwen3:4b 
 INFO Initializing server... name=filesystem 
 INFO Server connected name=filesystem 
 INFO Tools loaded server=filesystem count=11</code></pre>
